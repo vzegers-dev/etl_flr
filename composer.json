@@ -1,0 +1,19 @@
+{
+    "name": "vzegers/etl_flr",
+    "description": "Worker/ETL FLR",
+    "type": "project",
+    "require": {
+        "symfony/yaml": "^3.4"
+    },
+    "license": "open source",
+    "autoload": {
+        "psr-4": {
+            "Vzegers\\EtlFlr\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vicente Zegers"
+        }
+    ]
+}
