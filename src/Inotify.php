@@ -8,23 +8,21 @@ class Inotify
 {
    public $log;
    public function __construct(){
+       if (!extension_loaded('inotify')) {
+           die("The inotify extension is not loaded.\n");
+       }
        $this->log = new Logs();
    }
 
    public function start(){
-       $directory = '/var/www/html/inotify/'; // Change this to the directory you want to monitor
 
-// Create an inotify instance
+       $directory = '/var/www/html/inotify/';
        $inotifyInstance = inotify_init();
-
-// Add a watch on the specified directory for create, modify, and delete events
        $watchDescriptor = inotify_add_watch($inotifyInstance, $directory,
            IN_CREATE | IN_MODIFY | IN_DELETE | IN_MOVE);
-
        if ($watchDescriptor === false) {
            die("Failed to add watch on $directory\n");
        }
-
        echo "Watching $directory for changes...\n";
 
 // Loop to monitor the events

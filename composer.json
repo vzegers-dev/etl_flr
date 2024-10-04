@@ -3,7 +3,8 @@
     "description": "Worker/ETL FLR",
     "type": "project",
     "require": {
-        "symfony/yaml": "^3.4"
+        "symfony/yaml": "^3.4",
+      "ext-mysqli": "*"
     },
     "license": "open source",
     "autoload": {

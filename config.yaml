@@ -1,5 +1,7 @@
-parameters:
-  database_host: 10.10.12.3
-
+db:
+  hostname: 190.105.238.63
+  username: worker_etl
+  password: x.5frptx.5frpt
+  database: cel_003_dde
 logs:
-  path: '/var/www/html/upload/log'
+  path: '/var/www/html/log'

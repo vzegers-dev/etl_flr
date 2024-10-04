@@ -13,7 +13,6 @@ class Logs
         $log_filename = $this->path['logs']['path'];
         if (!file_exists($log_filename))
         {
-            // create directory/folder uploads.
             mkdir($log_filename, 0777, true);
         }
         $log_file_data = $log_filename.'/log_' . date('d-m-Y') . '.log';
