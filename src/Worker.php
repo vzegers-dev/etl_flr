@@ -69,6 +69,10 @@ class Worker
         }
     }
 
+    private function formatted($value){
+       return  "".$value;
+}
+
 
      private function readXlsxAndInsert($filePath,$campania){
 
@@ -85,12 +89,12 @@ class Worker
                  foreach ($cellIterator as $cell) {
                       if($it == 1) continue;
                       $values.=($this->config[$campania]['limit'] ==
-                          $cell->getColumn())? $cell->getValue().')': $cell->getValue().',';
+                          $cell->getColumn())? $this->formatted($cell->getFormattedValue()).')': $this->formatted($cell->getValue()).',';
                  }
                  $values.=($highestRow === $it++)? ';' : (($it === 2)? '' : ',') ;
                  $insert.=$values;
              }
-             $this->logs->message($insert);
+             $this->db->query($insert);
          } catch (Exception $e) {
              $this->logs->message("Error reading file: " . $e->getMessage());
          }
