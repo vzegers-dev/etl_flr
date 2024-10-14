@@ -16,8 +16,7 @@ class Logs
             mkdir($log_filename, 0777, true);
         }
         $log_file_data = $log_filename.'/log_' . date('d-m-Y') . '.log';
-        // if you don't add `FILE_APPEND`, the file will be erased each time you add a log
-        file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
+        file_put_contents($log_file_data, date('Y-m-d h:s').' : '. $log_msg . "\n", FILE_APPEND);
     }
 
 }

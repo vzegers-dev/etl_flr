@@ -4,7 +4,8 @@
     "type": "project",
     "require": {
         "symfony/yaml": "^3.4",
-      "ext-mysqli": "*"
+      "ext-mysqli": "*",
+        "phpoffice/phpspreadsheet": "^1.8"
     },
     "license": "open source",
     "autoload": {

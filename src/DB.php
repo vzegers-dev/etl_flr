@@ -39,9 +39,9 @@
             $con = $this->connection();
             $result = mysqli_query($con, $query);
             if ($result) {
-                $this->logs->message('Exito');
+                $this->logs->message('Query completed');
             } else {
-                $this->logs->message("Error creating database: " . mysqli_error($con));
+                $this->logs->message("MYSQL Error : " . mysqli_error($con));
             }
             $this->closeConnection($con);
             return $result;

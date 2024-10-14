@@ -1,7 +1,11 @@
 db:
   hostname: 190.105.238.63
-  username: worker_etl
-  password: x.5frptx.5frpt
+  username: root_externo
+  password: x.5frptx.5frptV
   database: cel_003_dde
 logs:
   path: '/var/www/html/log'
+
+SOAP:
+  insert: 'INSERT INTO soap (anno_venta,total_aporte,cuenta_de_poliza, tipo_vehiculo,marca,anio,aporte_por_vehiculo,fecha_carga) VALUES '
+  limit: 'N'
