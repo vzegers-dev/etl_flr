@@ -3,10 +3,11 @@ db:
   username: root_externo
   password: x.5frptx.5frptV
   database: cel_003_dde
-  debug: TRUE
+  debug: FALSE
 logs:
   path: '/var/www/html/log'
 
 SOAP:
-  insert: 'INSERT INTO soap (rut,dv,anno_venta,nombre,telefono,email,total_aporte,cuenta_de_poliza,tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga) VALUES '
+  insert: 'INSERT INTO soap (rut,dv,anno_venta,nombre,telefono,email,total_aporte,cuenta_de_poliza,tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga,jobs_id) VALUES '
   limit: 'N'
+  rut: 'A'

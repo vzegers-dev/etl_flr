@@ -13,12 +13,14 @@ class Worker
     private $config;
     private $logs;
     private $db;
+    private $rut;
 
     public function __construct()
     {
         $this->config = Yaml::parseFile('./config.yaml');
         $this->logs = new Logs();
         $this->db = new DB();
+        $this->rut = "";
     }
 
 
@@ -58,7 +60,7 @@ class Worker
                     if (file_put_contents('tmp/' . basename($jobs['payload']),
                         file_get_contents($jobs['payload']))) {
                         $this->logs->message('Download file : ' . basename($jobs['payload']));
-                        $this->readXlsxAndInsert('tmp/' . basename($jobs['payload']), $jobs['nombre']);
+                        $this->readXlsxAndInsert('tmp/' . basename($jobs['payload']), $jobs['nombre'],$jobs['id']);
                         $this->popJobs($jobs['id'],'running',date('Y-m-d H:i:s'),'0000-00-00 00:00:00');
                     } else {
                         $this->logs->message('File downloading failed');
@@ -69,12 +71,20 @@ class Worker
         }
     }
 
-    private function formatted($value){
-       return  "".$value;
-}
+    private function formatted($cell,$campania){
+        switch ($campania) {
+            case 'SOAP';
+             $this->rut = ($cell->getColumn() == $this->config[$campania]['rut'] && $cell->getValue() != "")?
+                 $cell->getFormattedValue() : $this->rut;
+             return  ($cell->getColumn() == $this->config[$campania]['rut'])? $this->rut :  "'".$cell->getFormattedValue()."'";
+        default:
+            return "'".$cell->getValue()."'";
+        }
+    }
 
 
-     private function readXlsxAndInsert($filePath,$campania){
+
+     private function readXlsxAndInsert($filePath,$campania,$job_id){
 
          try {
              $it= 1;
@@ -89,7 +99,8 @@ class Worker
                  foreach ($cellIterator as $cell) {
                       if($it == 1) continue;
                       $values.=($this->config[$campania]['limit'] ==
-                          $cell->getColumn())? $this->formatted($cell->getFormattedValue()).')': $this->formatted($cell->getValue()).',';
+                          $cell->getColumn())? $this->formatted($cell,$campania).','.$job_id.')':
+                          $this->formatted($cell,$campania).',';
                  }
                  $values.=($highestRow === $it++)? ';' : (($it === 2)? '' : ',') ;
                  $insert.=$values;
