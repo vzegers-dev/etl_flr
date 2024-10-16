@@ -7,7 +7,10 @@ db:
 logs:
   path: '/var/www/html/log'
 
+url: 'http://localhost/basemaestra/'
+
 SOAP:
-  insert: 'INSERT INTO soap (rut,dv,anno_venta,nombre,telefono,email,total_aporte,cuenta_de_poliza,tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga,jobs_id) VALUES '
-  limit: 'N'
+  insert: 'INSERT INTO cargas (rut,dv,anno_venta,nombre,telefono,email,total_aporte,cuenta_de_poliza,
+  tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga,usuarios_email,jobs_id) VALUES '
+  limit: 'O'
   rut: 'A'

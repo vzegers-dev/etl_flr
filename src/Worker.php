@@ -58,7 +58,7 @@ class Worker
             switch ($jobs['type']) {
                 case 'xls';
                     if (file_put_contents('tmp/' . basename($jobs['payload']),
-                        file_get_contents($jobs['payload']))) {
+                        file_get_contents($this->config['url'].'/'.$jobs['payload']))) {
                         $this->logs->message('Download file : ' . basename($jobs['payload']));
                         $this->readXlsxAndInsert('tmp/' . basename($jobs['payload']), $jobs['nombre'],$jobs['id']);
                         $this->popJobs($jobs['id'],'running',date('Y-m-d H:i:s'),'0000-00-00 00:00:00');
