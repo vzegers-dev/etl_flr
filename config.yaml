@@ -3,14 +3,35 @@ db:
   username: root_externo
   password: x.5frptx.5frptV
   database: cel_003_dde
-  debug: FALSE
+  debug: true
 logs:
   path: '/var/www/html/log'
 
 url: 'http://localhost/basemaestra/'
+waiting: 5
 
-SOAP:
+soap:
   insert: 'INSERT INTO cargas (rut,dv,anno_venta,nombre,telefono,email,total_aporte,cuenta_de_poliza,
-  tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga,usuarios_email,jobs_id) VALUES '
+  tipo_vehiculo,marca,anio,aporte_por_vehiculo,direccion,fecha_carga,usuarios_email,jobs_id,periodo) VALUES '
   limit: 'O'
   rut: 'A'
+  fecha_carga: 'N'
+
+coronas:
+  insert: 'INSERT INTO cargas (procedencia,rut,dv,nombre,email,telefono,telefono_dos,telefono_tres,fecha_compra,monto_du,direccion,fecha_carga,usuarios_email,jobs_id,periodo) VALUES '
+  limit: 'M'
+  rut: 'B'
+  fecha_carga: 'L'
+
+
+recuperacion:
+  insert: 'INSERT INTO cargas (rut,dv,nombre,apellido,aporte,telefono,telefono_dos,telefono_tres,email,comuna,fecha_inactivo,motivo, glosa,medio_aporte,direccion,estado_mandato,fecha_carga,usuarios_email,jobs_id,periodo) VALUES '
+  limit: 'R'
+  rut: 'A'
+  fecha_carga: 'Q'
+
+inactivos_recientes:
+  insert: 'INSERT INTO cargas (rut,dv,nombre,apellido,aporte,telefono,telefono_dos,telefono_tres,email,comuna,fecha_inactivo,motivo, glosa,medio_aporte,direccion,estado_mandato,fecha_carga,usuarios_email,jobs_id,periodo) VALUES '
+  limit: 'R'
+  rut: 'A'
+  fecha_carga: 'Q'

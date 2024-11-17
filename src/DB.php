@@ -18,14 +18,18 @@
 
         public function connection()
         {
-            $db = mysqli_connect($this->config[ 'db' ][ 'hostname' ], $this->config[ 'db' ][ 'username' ],
-                $this->config[ 'db' ][ 'password' ],
-                $this->config[ 'db' ][ 'database' ]);
-            if (!$db) {
-                $this->logs->message("Connection failed: " . mysqli_connect_error());
-            } else {
-                $this->logs->message("Connected successfully");
-                return $db;
+            try {
+                $db = mysqli_connect($this->config[ 'db' ][ 'hostname' ], $this->config[ 'db' ][ 'username' ],
+                    $this->config[ 'db' ][ 'password' ],
+                    $this->config[ 'db' ][ 'database' ]);
+                if (!$db) {
+                    $this->logs->message("Connection failed: " . mysqli_connect_error());
+                } else {
+                    $this->logs->message("Connected successfully");
+                    return $db;
+                }
+            } catch (\Exception $exception) {
+                $this->logs->message($exception->getMessage());
             }
 
         }
@@ -37,15 +41,19 @@
 
         public function query($query)
         {
-            $con = $this->connection();
-            $result = mysqli_query($con, $query);
-            if ($result) {
-                $query = $this->config['db']['debug'] ? $query : ' disabled debugger';
-                $this->logs->message('Query completed : '.$query);
-            } else {
-                $this->logs->message("MYSQL Error : " . mysqli_error($con).' '.$query);
+            try {
+                $con = $this->connection();
+                $result = mysqli_query($con, $query);
+                if ($result) {
+                    $query = $this->config[ 'db' ][ 'debug' ] ? $query : ' disabled debugger';
+                    $this->logs->message('Query completed : ' . $query);
+                } else {
+                    $this->logs->message("MYSQL Error : " . mysqli_error($con) . ' ' . $query);
+                }
+                $this->closeConnection($con);
+                return $result;
+            } catch (\Exception $exception) {
+                $this->logs->message($exception->getMessage());
             }
-            $this->closeConnection($con);
-            return $result;
         }
     }
