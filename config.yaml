@@ -23,7 +23,6 @@ coronas:
   rut: 'B'
   fecha_carga: 'L'
 
-
 recuperacion:
   insert: 'INSERT INTO cargas (rut,dv,nombre,apellido,aporte,telefono,telefono_dos,telefono_tres,email,comuna,fecha_inactivo,motivo, glosa,medio_aporte,direccion,estado_mandato,fecha_carga,usuarios_email,jobs_id,periodo) VALUES '
   limit: 'R'
