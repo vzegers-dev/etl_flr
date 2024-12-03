@@ -62,11 +62,24 @@
 
         private function processJobs($jobs)
         {
+
+            $options = [
+                "https" => [
+                    "method" => "GET",
+                    "header" => "Content-Type: application/x-www-form-urlencoded\r\n"
+                ],
+                "ssl" => [
+                    "verify_peer" => false,
+                    "verify_peer_name" => false,
+                    "allow_self_signed" => true
+                ]
+            ];
+            $context = stream_context_create($options);
             try {
                 switch ($jobs[ 'type' ]) {
                     case 'xls';
                         if (file_put_contents('tmp/' . basename($jobs[ 'payload' ]),
-                            file_get_contents($jobs[ 'payload' ]))) {
+                            file_get_contents($jobs[ 'payload' ], false,$context))) {
                             $this->logs->message('Download file : ' . basename($jobs[ 'payload' ]));
                             $this->popJobs($jobs[ 'id' ], 'running', date('Y-m-d H:i:s'), '0000-00-00 00:00:00');
                             $this->readXlsxAndInsert('tmp/' . basename($jobs[ 'payload' ]), $jobs);
