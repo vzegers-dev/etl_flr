@@ -104,6 +104,11 @@
             return $date;
         }
 
+        function isEmpty($values){
+            $arrayValues = explode(',', $values);
+            return (isset($arrayValues[1]) && $arrayValues[1] === "''");
+        }
+
 
         private function formatted($cell, $campania)
         {
@@ -122,7 +127,7 @@
                         $cell->getFormattedValue() : $this->rut;
                     return ($cell->getColumn() == $this->config[ $campania ][ 'rut' ]) ? $this->rut :
                         (($cell->getColumn() != $this->config[ $campania ][ 'fecha_carga' ] ) ?
-                            "'" . $cell->getFormattedValue() . "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'");
+                            "'" . utf8_decode($cell->getFormattedValue()) . "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'");
             }
         }
 
@@ -141,15 +146,19 @@
                     $cellIterator->setIterateOnlyExistingCells(false);
                     $values = ($it != 1) ? '(' : '';
                     foreach ($cellIterator as $cell) {
-                        if ($it == 1) continue;
-                        $values .= ($this->config[ $jobs[ 'nombre' ] ][ 'limit' ] ==
+                        if ($it == 1) { continue; }
+                            $values .= ($this->config[ $jobs[ 'nombre' ] ][ 'limit' ] ==
                             $cell->getColumn()) ? $this->formatted($cell, $jobs[ 'nombre' ]) . ',' . $jobs[ 'id' ] . ',"' . $jobs[ 'date_campaign' ] . '")' :
                             $this->formatted($cell, $jobs[ 'nombre' ]) . ',';
                     }
                     $values .= ($highestRow === $it++) ? ';' : (($it === 2) ? '' : ',');
                     $insert .= $values;
+                    if($this->isEmpty($values)) break;
+                    $this->logs->message("Error reading file: " .$values);
+
+
                 }
-                $this->dbProcess($this->db->query($insert), $jobs);
+                $this->dbProcess($this->db->query((substr($insert, 0, -1).";")), $jobs);
 
             } catch (Exception $e) {
                 $this->logs->message("Error reading file: " . $e->getMessage());
