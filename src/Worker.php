@@ -156,7 +156,6 @@
                     if($this->isEmpty($values)) break;
                     $this->logs->message("Error reading file: " .$values);
 
-
                 }
                 $this->dbProcess($this->db->query((substr($insert, 0, -1).";")), $jobs);
 
