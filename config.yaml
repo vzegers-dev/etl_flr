@@ -1,11 +1,11 @@
 db:
-  hostname: 190.105.238.63
-  username: root_externo
-  password: x.5frptx.5frptV
-  database: cel_003_dde
+  hostname:
+  username:
+  password:
+  database:
   debug: true
 logs:
-  path: '/var/www/html/log'
+  path: '/var/www/html/'
 
 url: 'http://localhost/basemaestra/'
 waiting: 5
