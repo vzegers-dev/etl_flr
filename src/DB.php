@@ -22,6 +22,7 @@
                 $db = mysqli_connect($this->config[ 'db' ][ 'hostname' ], $this->config[ 'db' ][ 'username' ],
                     $this->config[ 'db' ][ 'password' ],
                     $this->config[ 'db' ][ 'database' ]);
+                    mysqli_set_charset($db, "utf8mb4");
                 if (!$db) {
                     $this->logs->message("Connection failed: " . mysqli_connect_error());
                 } else {
