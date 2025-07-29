@@ -30,6 +30,16 @@
             return $this->utf8_clean_array($text);
         }
 
+
+        function repararTexto($texto) {
+
+            if (strpos($texto, '�') !== false || !mb_check_encoding($texto, 'UTF-8')) {
+                // Intenta reparar suponiendo que venía como ISO-8859-1 o Windows-1252
+                $texto = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
+            }
+            return $texto;
+        }
+
         function utf8_clean_array($array, $convert_keys = false) {
             $clean = [];
 
@@ -49,7 +59,7 @@
                 }
             }
 
-            return $clean;
+            return $this->repararTexto($clean);
         }
 
         public function pushJobs()
