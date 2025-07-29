@@ -24,6 +24,10 @@
             $this->rut = "";
         }
 
+        function cleanFormat($text) {
+            $text = str_replace('"', '\"', $text);
+            return str_replace("'", "\'", $text);
+        }
 
         public function pushJobs()
         {
@@ -115,19 +119,20 @@
             switch ($campania) {
                 case 'soap';
                     $this->rut = ($cell->getColumn() == $this->config[ $campania ][ 'rut' ] && $cell->getValue() != "") ?
-                        $cell->getFormattedValue() : $this->rut;
+                        $this->cleanFormat($cell->getFormattedValue()) : $this->rut;
                     return ($cell->getColumn() == $this->config[ $campania ][ 'rut' ]) ? $this->rut :
                         (($cell->getColumn() != $this->config[ $campania ][ 'fecha_carga' ] ) ?
                             "'" . $cell->getFormattedValue() . "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'");
                 case 'coronas';
                     return ($cell->getColumn() != $this->config[ $campania ][ 'fecha_carga' ] ) ?
-                     "'" . $cell->getFormattedValue() . "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'";
+                     "'" . $this->cleanFormat($cell->getFormattedValue()). "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'";
                 default:
                     $this->rut = ($cell->getColumn() == $this->config[ $campania ][ 'rut' ] && $cell->getValue() != "") ?
-                        $cell->getFormattedValue() : $this->rut;
+                        $this->cleanFormat($cell->getFormattedValue()) : $this->rut;
                     return ($cell->getColumn() == $this->config[ $campania ][ 'rut' ]) ? $this->rut :
                         (($cell->getColumn() != $this->config[ $campania ][ 'fecha_carga' ] ) ?
-                            "'" . utf8_decode($cell->getFormattedValue()) . "'" :  "'" . self::convertDate($cell->getFormattedValue()). "'");
+                            "'" . utf8_decode($this->cleanFormat($cell->getFormattedValue())) . "'" :
+                            "'" . self::convertDate($cell->getFormattedValue()). "'");
             }
         }
 
