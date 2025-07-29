@@ -27,13 +27,13 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  str_replace("'", "", $text);
-            return $this->utf8_clean_array($text);
+            return $this->repararTexto($text);
         }
 
 
         function repararTexto($texto) {
 
-            if (strpos($texto, '�') !== false || !mb_check_encoding($texto, 'UTF-8')) {
+            if (strpos($texto, '�?') !== false || !mb_check_encoding($texto, 'UTF-8')) {
                 // Intenta reparar suponiendo que venía como ISO-8859-1 o Windows-1252
                 $texto = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
             }
