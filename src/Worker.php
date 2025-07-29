@@ -27,9 +27,31 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  strtolower(str_replace("'", "", $text));
-            return $this->utf8_clean_array($text);
+            return $this->fix_common_utf8_errors($text);
         }
 
+
+        function fix_common_utf8_errors($text) {
+            $map = [
+                'Ã¡' => 'á',
+                'Ã©' => 'é',
+                'Ã­' => 'í',
+                'Ã³' => 'ó',
+                'Ãº' => 'ú',
+                'Ã±' => 'ñ',
+                'Ã‘' => 'Ñ',
+                'â€“' => '–',
+                'â€”' => '—',
+                'â€˜' => '‘',
+                'â€™' => '’',
+                'â€œ' => '“',
+                'â€�' => '”',
+                'Â'   => '',
+                '�'   => '', // reemplaza el símbolo de "carácter inválido"
+            ];
+
+            return str_replace(array_keys($map), array_values($map), $text);
+        }
 
         function repararTexto($texto) {
 
