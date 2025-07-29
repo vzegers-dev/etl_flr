@@ -131,7 +131,7 @@
                         $this->cleanFormat($cell->getFormattedValue()) : $this->rut;
                     return ($cell->getColumn() == $this->config[ $campania ][ 'rut' ]) ? $this->rut :
                         (($cell->getColumn() != $this->config[ $campania ][ 'fecha_carga' ] ) ?
-                            "'" . utf8_decode($this->cleanFormat($cell->getFormattedValue())) . "'" :
+                            "'" . $this->cleanFormat($cell->getFormattedValue()) . "'" :
                             "'" . self::convertDate($cell->getFormattedValue()). "'");
             }
         }
