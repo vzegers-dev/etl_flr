@@ -27,7 +27,7 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  str_replace("'", "", $text);
-            return $this->fix_common_utf8_errors($text);
+            return $text;
         }
 
 
