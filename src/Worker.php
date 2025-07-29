@@ -25,8 +25,8 @@
         }
 
         function cleanFormat($text) {
-            $text = str_replace('"', '\"', $text);
-            return str_replace("'", "\'", $text);
+            $text = str_replace('"', '', $text);
+            return str_replace("'", "", $text);
         }
 
         public function pushJobs()
