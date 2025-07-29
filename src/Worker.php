@@ -26,7 +26,7 @@
 
         function cleanFormat($text) {
 
-            return str_replace("�", "[?]", $this->fix_common_utf8_errors($text));
+            return str_replace("�", "", $this->fix_common_utf8_errors($text));
         }
 
 
