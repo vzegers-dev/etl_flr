@@ -27,10 +27,10 @@
         function cleanFormat($text) {
             $text = mb_convert_encoding(str_replace('"', '', $text), 'UTF-8', 'ISO-8859-1');
             $text =  str_replace("'", "", $text);
-            if (!mb_check_encoding($texto, 'UTF-8')) {
-                $texto = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
+            if (!mb_check_encoding($text, 'UTF-8')) {
+                $text = mb_convert_encoding($text, 'UTF-8', 'ISO-8859-1');
             }
-            return $texto;
+            return $text;
         }
 
         public function pushJobs()
