@@ -26,7 +26,7 @@
 
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
-            $text =  strtolower(str_replace("'", "", $text));
+            $text =  str_replace("'", "", $text);
             return $this->utf8_clean_array($text);
         }
 
