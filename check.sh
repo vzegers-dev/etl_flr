@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Nombre del script PHP
-PHP_SCRIPT="/var/www/etl_flr/run.php"
+PHP_SCRIPT="run.php"
 
 # Comprobar si el script PHP está corriendo
 if ! pgrep -f "php $PHP_SCRIPT" > /dev/null; then
