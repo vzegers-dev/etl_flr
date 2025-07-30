@@ -27,7 +27,7 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  str_replace("'", "", $text);
-            return $value = mb_convert_encoding($text, 'UTF-8', 'ISO-8859-1');
+            return $value = utf8_encode($text);
         }
 
 
