@@ -27,40 +27,9 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  str_replace("'", "", $text);
-            return $this->utf8_clean_array($text);
+            return $value = mb_convert_encoding($text, 'UTF-8', 'ISO-8859-1');
         }
 
-
-        function repararTexto($texto) {
-
-            if (strpos($texto, '�?') !== false || !mb_check_encoding($texto, 'UTF-8')) {
-                // Intenta reparar suponiendo que venía como ISO-8859-1 o Windows-1252
-                $texto = mb_convert_encoding($texto, 'UTF-8', 'ISO-8859-1');
-            }
-            return $texto;
-        }
-
-        function utf8_clean_array($array, $convert_keys = false) {
-            $clean = [];
-
-            foreach ($array as $key => $value) {
-                // Limpiar clave si se desea
-                if ($convert_keys && !mb_check_encoding($key, 'UTF-8')) {
-                    $key = mb_convert_encoding($key, 'UTF-8', 'ISO-8859-1');
-                }
-
-                if (is_array($value)) {
-                    $clean[$key] = utf8_clean_array($value, $convert_keys);
-                } else {
-                    if (!mb_check_encoding($value, 'UTF-8')) {
-                        $value = mb_convert_encoding($value, 'UTF-8', 'ISO-8859-1');
-                    }
-                    $clean[$key] = $value;
-                }
-            }
-
-            return $clean;
-        }
 
         public function pushJobs()
         {
