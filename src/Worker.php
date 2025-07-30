@@ -59,7 +59,7 @@
                 }
             }
 
-            return $this->repararTexto($clean);
+            return $clean;
         }
 
         public function pushJobs()
