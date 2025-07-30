@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Nombre del script PHP
+#pgrep -f "php /ruta/completa/run.php"
 PHP_SCRIPT="run.php"
 
 # Comprobar si el script PHP está corriendo
