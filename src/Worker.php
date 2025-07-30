@@ -27,9 +27,24 @@
         function cleanFormat($text) {
             $text = str_replace('"', '', $text);
             $text =  str_replace("'", "", $text);
-            return $value = utf8_encode($text);
+            return $this->fix_common_utf8_errors($text);
         }
 
+        function fix_common_utf8_errors($text) {
+            $map = [
+                'Ã¡' => 'á',
+                'Ã©' => 'é',
+                'Ã­' => 'í',
+                'Ã³' => 'ó',
+                'Ãº' => 'ú',
+                'Ã±' => 'ñ',
+                'Ã‘' => 'Ñ',
+                'Â'   => '',
+                '�'   => ''
+            ];
+
+            return str_replace(array_keys($map), array_values($map), $text);
+        }
 
         public function pushJobs()
         {
