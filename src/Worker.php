@@ -54,7 +54,7 @@
 
         public function popJobs($id, $status, $start, $end, $log)
         {
-            return $this->db->query("UPDATE jobs SET status='" . $status . "', 
+           return $this->db->query("UPDATE jobs SET status='" . $status . "',
         start_time='" . $start . "', end_time='" . $end . "', error_log='" . $log . "' WHERE id=" . $id);
         }
 
@@ -127,7 +127,8 @@
 
         function isEmpty($values){
             $arrayValues = explode(',', $values);
-            return trim(explode(",", $arrayValues)[2], " '\"") === "" ? true : false;
+            $this->logs->message("values: " .$arrayValues[1]);
+            return ($arrayValues[1] != "''")?  $values : '';
         }
 
 
@@ -166,20 +167,27 @@
                 foreach ($sheet->getRowIterator() as $row) {
                     $cellIterator = $row->getCellIterator();
                     $cellIterator->setIterateOnlyExistingCells(false);
-                    $values = ($it != 1) ? '(' : '';
+                     if($it != 1) {
+                         $values = '(';  };
                     foreach ($cellIterator as $cell) {
                         if ($it == 1) { continue; }
                             $values .= ($this->config[ $jobs[ 'nombre' ] ][ 'limit' ] ==
                             $cell->getColumn()) ? $this->formatted($cell, $jobs[ 'nombre' ]) . ',' . $jobs[ 'id' ] . ',"' . $jobs[ 'date_campaign' ] . '")' :
                             $this->formatted($cell, $jobs[ 'nombre' ]) . ',';
                     }
-                    $values .= ($highestRow === $it++) ? ';' : (($it === 2) ? '' : ',');
-                    $insert .= $values;
-                    if($this->isEmpty($values)) break;
-                    $this->logs->message("Error reading file: " .$values);
-
+                    $it++;
+                    $this->logs->message("values: " .$it.' '.$values);
+                    $sql[] = $this->isEmpty($values);
+                    $this->logs->message("values: " .$it.' '.($this->isEmpty($values) == ''));
+                    if($this->isEmpty($values) == '' && $it > 2 ) {
+                        break;
+                    }
                 }
-                $this->dbProcess($this->db->query((substr($insert, 0, -1).";")), $jobs);
+               $sql_i= array_filter($sql, function($v) {
+                    return trim($v) !== "";
+                });
+                $this->logs->message("values: " .$it.' '.implode(',',$sql_i));
+                $this->dbProcess($this->db->query((substr($insert.implode(',',$sql_i), 0, -1).");")), $jobs);
 
             } catch (Exception $e) {
                 $this->logs->message("Error reading file: " . $e->getMessage());
