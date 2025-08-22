@@ -127,7 +127,7 @@
 
         function isEmpty($values){
             $arrayValues = explode(',', $values);
-            return (isset($arrayValues[1]) && $arrayValues[1] === "''");
+            return trim(explode(",", $arrayValues)[2], " '\"") === "" ? true : false;
         }
 
 
